@@ -1,21 +1,3 @@
-terraform {
-  required_providers {
-    github = {
-      source  = "integrations/github"
-      version = "~> 6.0"
-    }
-  }
-}
-
-provider "github" {
-  owner = var.github_owner
-}
-
-variable "github_owner" {
-  description = "The GitHub organization name."
-  type        = string
-}
-
 module "repository" {
   source = "../../modules/repository"
 
@@ -73,14 +55,6 @@ module "repository" {
 #       permission = "push"
 #     }
 #   ]
-# }
-
-output "repo_url" {
-  value = module.repository.repository_html_url
-}
-
-# output "team_slug" {
-#   value = module.team.team_slug
 # }
 
 # module "runner_group" {

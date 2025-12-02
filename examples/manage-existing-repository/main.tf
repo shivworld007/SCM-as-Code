@@ -1,26 +1,3 @@
-terraform {
-  required_providers {
-    github = {
-      source  = "integrations/github"
-      version = "~> 6.0"
-    }
-  }
-}
-
-provider "github" {
-  owner = var.github_owner
-}
-
-variable "github_owner" {
-  description = "The GitHub organization name."
-  type        = string
-}
-
-variable "existing_repo_name" {
-  description = "The name of the existing repository."
-  type        = string
-}
-
 data "github_repository" "existing" {
   full_name = "${var.github_owner}/${var.existing_repo_name}"
 }
