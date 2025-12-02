@@ -44,23 +44,45 @@ graph TD
 │   └── manage-existing-repository/ # Import and manage existing repos
 ```
 
-## 🚀 Modules
+## 🔐 Authentication & Permissions
 
-| Module | Description | Individual | Organization |
-| :--- | :--- | :---: | :---: |
-| [`repository`](./modules/repository) | Full repository lifecycle management (protection, keys, webhooks). | ✅ | ✅ |
-| [`team`](./modules/team) | Team creation, membership, and repository access. | ❌ | ✅ |
-| [`runner_group`](./modules/runner_group) | Management of Actions self-hosted runner groups. | ❌ | ✅ |
-| [`branch_protection`](./modules/branch_protection) | Standalone branch protection rules. | ✅ | ✅ |
+To use these modules, you need to authenticate with GitHub using a Personal Access Token (PAT).
 
-> **Note**: Secret and Variable management modules are intentionally excluded to prevent sensitive data exposure in Terraform state. Use a dedicated secret manager (e.g., Vault) or GitHub's UI/CLI for secrets.
+### 1. Create a Personal Access Token (PAT)
+1.  Go to **Settings** > **Developer settings** > **Personal access tokens** > **Tokens (classic)**.
+2.  Generate a new token with the following scopes:
+
+| Scope | Reason |
+| :--- | :--- |
+| `repo` | Full control of private repositories (includes `repo:status`, `repo_deployment`, etc). |
+| `admin:org` | Required to manage Teams and Organization settings. |
+| `delete_repo` | Required to destroy repositories via Terraform. |
+| `workflow` | Required to manage GitHub Actions workflows and runner groups. |
+
+### 2. Configure Environment Variable
+It is best practice to pass the token as an environment variable rather than hardcoding it.
+
+```bash
+export GITHUB_TOKEN="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+export GITHUB_OWNER="my-org-name"
+```
+
+## 🚀 Modules Compatibility
+
+Different modules require different account types.
+
+| Module | Description | Individual Account | Organization Account | Notes |
+| :--- | :--- | :---: | :---: | :--- |
+| [`repository`](./modules/repository) | Full repository lifecycle management. | ✅ | ✅ | Works for both User and Org repos. |
+| [`team`](./modules/team) | Team creation & membership. | ❌ | ✅ | **Teams are an Organization-only feature.** |
+| [`runner_group`](./modules/runner_group) | Self-hosted runner groups. | ❌ | ✅ | **Runner Groups are an Organization-only feature.** |
+| [`branch_protection`](./modules/branch_protection) | Branch protection rules. | ✅ | ✅ | Requires Pro/Team plan for private repos. |
 
 ## 💻 Usage
 
 ### Prerequisites
 - [Terraform](https://www.terraform.io/downloads.html) >= 1.0
 - [GitHub Provider](https://registry.terraform.io/providers/integrations/github/latest) >= 6.0
-- A GitHub Personal Access Token (PAT) with appropriate permissions (`repo`, `admin:org`, `delete_repo`).
 
 ### Quick Start
 
@@ -84,6 +106,7 @@ graph TD
 
 4.  **Initialize and Apply:**
     ```bash
+    export GITHUB_TOKEN="your-pat-token"
     terraform init
     terraform apply
     ```
