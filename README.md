@@ -42,7 +42,6 @@ graph TD
 ├── working_examples/        # Enterprise-grade example configurations
 │   ├── create-repository/   # Complete setup for new repositories
 │   └── manage-existing-repository/ # Import and manage existing repos
-└── bootstrap/               # Bootstrapping configuration for this repository
 ```
 
 ## 🚀 Modules
