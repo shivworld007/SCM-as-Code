@@ -1,0 +1,51 @@
+name: Terraform Validation
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate Terraform
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: "1.9.0"
+
+    - name: Terraform Format Check
+      run: terraform fmt -check -recursive
+
+    - name: Terraform Init & Validate (Repository Module)
+      run: |
+        cd modules/repository
+        terraform init -backend=false
+        terraform validate
+
+    - name: Terraform Init & Validate (Team Module)
+      run: |
+        cd modules/team
+        terraform init -backend=false
+        terraform validate
+
+    - name: Terraform Init & Validate (Example: Create Repository)
+      run: |
+        cd working_examples/create-repository
+        terraform init -backend=false
+        terraform validate
+
+    - name: Terraform Init & Validate (Example: Manage Existing Repository)
+      run: |
+        cd working_examples/manage-existing-repository
+        terraform init -backend=false
+        terraform validate
