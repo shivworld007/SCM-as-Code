@@ -38,13 +38,13 @@ jobs:
         terraform init -backend=false
         terraform validate
 
-    - name: Terraform Init & Validate (Example: Create Repository)
+    - name: "Terraform Init & Validate (Example: Create Repository)"
       run: |
         cd working_examples/create-repository
         terraform init -backend=false
         terraform validate
 
-    - name: Terraform Init & Validate (Example: Manage Existing Repository)
+    - name: "Terraform Init & Validate (Example: Manage Existing Repository)"
       run: |
         cd working_examples/manage-existing-repository
         terraform init -backend=false

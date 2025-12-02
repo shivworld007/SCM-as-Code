@@ -9,8 +9,8 @@ module "branch_protection" {
 
   branch_protection_rules = [
     {
-      pattern                = "main"
-      enforce_admins         = true
+      pattern        = "main"
+      enforce_admins = true
       required_pull_request_reviews = {
         dismiss_stale_reviews           = true
         restrict_dismissals             = false

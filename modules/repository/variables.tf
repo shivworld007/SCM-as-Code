@@ -102,10 +102,10 @@ variable "archive_on_destroy" {
 variable "branch_protection_rules" {
   description = "List of branch protection rules."
   type = list(object({
-    pattern                = string
-    enforce_admins         = bool
-    allows_deletions       = optional(bool, false)
-    allows_force_pushes    = optional(bool, false)
+    pattern             = string
+    enforce_admins      = bool
+    allows_deletions    = optional(bool, false)
+    allows_force_pushes = optional(bool, false)
     required_status_checks = optional(object({
       strict   = bool
       contexts = list(string)
