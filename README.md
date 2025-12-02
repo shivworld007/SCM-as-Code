@@ -2,6 +2,7 @@
 
 [![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)](https://www.terraform.io/)
 [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/)
+[![Terraform Validation](https://github.com/shivworld007/SCM-as-Code/actions/workflows/terraform.yml/badge.svg)](https://github.com/shivworld007/SCM-as-Code/actions/workflows/terraform.yml)
 
 A comprehensive, modular, and secure Terraform solution for managing GitHub organizations, repositories, teams, and access controls as code. Designed for enterprise scalability and security best practices.
 
@@ -67,6 +68,9 @@ export GITHUB_TOKEN="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 export GITHUB_OWNER="my-org-name"
 ```
 
+> [!WARNING]
+> **Security Notice**: Never commit your `terraform.tfvars` file containing secrets or tokens to version control. Ensure it is listed in your `.gitignore`.
+
 ## 🚀 Modules Compatibility
 
 Different modules require different account types.
@@ -111,6 +115,20 @@ Different modules require different account types.
     terraform apply
     ```
 
+### Cleanup / Destroy
+To safely tear down the infrastructure:
+```bash
+terraform destroy
+```
+> **Note**: This will permanently delete the repositories and resources managed by Terraform.
+
+## 📦 Versioning
+
+This project follows [Semantic Versioning](https://semver.org/).
+- **v1.0.0**: Initial stable release with core modules and examples.
+
+See [CHANGELOG.md](./CHANGELOG.md) for details.
+
 ## 🛡️ Best Practices implemented
 
 - **Modularity**: Granular modules allow managing specific resources (like just branch protection) without taking over the entire repository.
@@ -119,4 +137,4 @@ Different modules require different account types.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please submit a Pull Request.
+Contributions are welcome! Please submit a Pull Request. See [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
